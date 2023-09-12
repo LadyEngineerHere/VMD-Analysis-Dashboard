@@ -9,6 +9,7 @@ import os
 
 # Initialize the Dash app with a Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server = app.server
 
 # Define a function to create image paths
 def get_image_path(brand):
