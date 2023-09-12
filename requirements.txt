@@ -3,3 +3,4 @@ dash-bootstrap-components==1.5.0
 plotly==5.16.1
 pandas==2.0.3
 pyodbc==4.0.39
+
