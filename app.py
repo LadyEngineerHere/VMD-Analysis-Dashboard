@@ -5,7 +5,7 @@ import plotly.express as px
 import pandas as pd
 import pyodbc
 import dash_bootstrap_components as dbc
-from credentials import DB_USERNAME, DB_PASSWORD  # Import database credentials
+import os
 
 # Initialize the Dash app with a Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -130,6 +130,8 @@ def update_brand_logo(selected_brand):
 )
 def update_plots(selected_brand):
     # Establish the connection to the database
+    DB_USERNAME = os.environ.get("DB_USERNAME")
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")
     server = "carserver1.database.windows.net"
     database = "cardb"
     driver = "{ODBC Driver 18 for SQL Server}"
