@@ -194,6 +194,5 @@ def toggle_views(btn_graphs, btn_tables):
     return {'display': 'block'}, {'display': 'none'}
 
 # Run the app
-if __name__ == '__main__':
-    server = app.server  
+if __name__ == '__main__': 
     app.run_server(debug=True)
