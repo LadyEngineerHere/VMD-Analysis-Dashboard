@@ -47,7 +47,7 @@ map_fig = px.scatter_geo(
 )
 
 # Define the layout of the app
-app.layout = html.Div(style={'backgroundColor': 'black', 'display': 'flex', 'height': '100vh'}, children=[
+app.layout = html.Div(style={'backgroundColor': 'black', 'display': 'flex', 'height': '110vh'}, children=[
     # Sidebar
     html.Div(
         className='sidebar',
