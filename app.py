@@ -9,7 +9,8 @@ import pyodbc
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 from dash import dcc, html
-import os 
+import os
+import sqlalchemy as sa
 
 # Initialize the Dash app with a Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -70,12 +71,18 @@ driver = "{ODBC Driver 18 for SQL Server}"
 conn_str = f"DRIVER={driver};SERVER={server};DATABASE={database};UID={DB_USERNAME};PWD={DB_PASSWORD}"
 connection = pyodbc.connect(conn_str)
 
+# Create an SQLAlchemy connection URL from the ODBC connection string
+connection_url = sa.engine.URL.create("mssql+pyodbc", query={"odbc_connect": conn_str})
+
+# Create an SQLAlchemy Engine
+engine = sa.create_engine(connection_url)
+
 # Query all data from the database
 query = "SELECT * FROM CARSINFO"
-db_df = pd.read_sql(query, connection)
+db_df = pd.read_sql_query(query, connection)
 
-# Close the database connection
-connection.close()
+# Close the SQLAlchemy Engine
+engine.dispose()
 
 # Define the layout of the app
 app.layout = dbc.Container(
