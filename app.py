@@ -60,11 +60,12 @@ map_fig = px.scatter_geo(
 )
 
 # Establish a connection to the database
+DB_USERNAME = os.environ.get("DB_USERNAME")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
 server = "carserver1.database.windows.net"
 database = "cardb"
 driver = "{ODBC Driver 18 for SQL Server}"
-DB_USERNAME = os.environ.get("DB_USERNAME")
-DB_PASSWORD = os.environ.get("DB_PASSWORD")
+
 
 conn_str = f"DRIVER={driver};SERVER={server};DATABASE={database};UID={DB_USERNAME};PWD={DB_PASSWORD}"
 connection = pyodbc.connect(conn_str)
