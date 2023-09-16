@@ -361,6 +361,5 @@ def update_plots(selected_brand):
     return scatter_fig, color_fig, model_pie_fig
 
 # Run the app
-if __name__ == '__main__':
-    server = app.server 
+if __name__ == '__main__': 
     app.run_server(debug=False)
