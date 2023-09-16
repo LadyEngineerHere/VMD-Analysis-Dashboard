@@ -79,7 +79,7 @@ engine = sa.create_engine(connection_url)
 
 # Query all data from the database
 query = "SELECT * FROM CARSINFO"
-db_df = pd.read_sql_query(query, connection)
+db_df = pd.read_sql_query(query, engine)
 
 # Close the SQLAlchemy Engine
 engine.dispose()
