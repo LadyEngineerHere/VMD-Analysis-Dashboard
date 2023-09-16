@@ -4,3 +4,4 @@ gunicorn
 plotly==5.16.1
 pandas==2.0.3
 pyodbc==4.0.39
+sqlalchemy==2.0.20
