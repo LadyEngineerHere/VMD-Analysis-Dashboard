@@ -1,5 +1,5 @@
 import dash
-from dash import Dash, url_base_pathname
+from dash import url_base_pathname
 from dash import dash_table
 from dash import dcc, html
 from dash.dependencies import Input, Output
