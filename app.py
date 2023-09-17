@@ -1,5 +1,4 @@
 import dash
-from dash import url_base_pathname
 from dash import dash_table
 from dash import dcc, html
 from dash.dependencies import Input, Output
@@ -12,9 +11,10 @@ import os
 
 # Initialize the Dash app with a Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], requests_pathname_prefix="/")
-app.url_base_pathname = "/"
+app.requests_pathname_prefix = "/"  
 app.routes_pathname_prefix = app.url_base_pathname
 server = app.server
+
 
 # Retrieve database credentials from environment variables
 DB_USERNAME = os.environ.get('DB_USERNAME')
