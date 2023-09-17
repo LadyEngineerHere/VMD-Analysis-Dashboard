@@ -1,12 +1,11 @@
 # Import necessary libraries
 import dash
-from dash import dash_table, dcc, html  # Combine dcc and html imports into one line
+from dash import dash_table, dcc, html 
 from dash.dependencies import Input, Output
+import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 import pyodbc
-import dash_bootstrap_components as dbc
-from dash.exceptions import PreventUpdate
 import os
 import sqlalchemy as sa
 import logging
@@ -328,6 +327,9 @@ def update_brand_logo(selected_brand):
     [Input('brand-dropdown', 'value')],
 )
 def update_plots(selected_brand):
+    DB_USERNAME = os.environ.get('DB_USERNAME')
+    DB_PASSWORD = os.environ.get('DB_PASSWORD')
+
     server = "carserver1.database.windows.net"
     database = "cardb"
     driver = "{ODBC Driver 18 for SQL Server}"
