@@ -1,25 +1,23 @@
 # Import necessary libraries
 import dash
-from dash import dash_table, dcc, html 
+from dash import dash_table
+from dash import dcc, html
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 import pyodbc
 import os
-import sqlalchemy as sa
-import logging
+
 
 # Initialize the Dash app with a Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)  # Set the logging level to INFO
-logger = logging.getLogger(__name__)  # Create a logger object for your script
+# Retrieve database credentials from environment variables
+DB_USERNAME = os.environ.get('DB_USERNAME')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
-# Log the type of the app object
-logger.info(f"Type of 'app': {type(app)}")
 
 # Define a function to get image paths for different car brands
 def get_image_path(brand):
@@ -66,28 +64,19 @@ map_fig = px.scatter_geo(
 )
 
 # Establish a connection to the database
-DB_USERNAME = os.environ.get("DB_USERNAME")
-DB_PASSWORD = os.environ.get("DB_PASSWORD")
 server = "carserver1.database.windows.net"
 database = "cardb"
 driver = "{ODBC Driver 18 for SQL Server}"
 
-
 conn_str = f"DRIVER={driver};SERVER={server};DATABASE={database};UID={DB_USERNAME};PWD={DB_PASSWORD}"
 connection = pyodbc.connect(conn_str)
 
-# Create an SQLAlchemy connection URL from the ODBC connection string
-connection_url = sa.engine.URL.create("mssql+pyodbc", query={"odbc_connect": conn_str})
-
-# Create an SQLAlchemy Engine
-engine = sa.create_engine(connection_url)
-
 # Query all data from the database
 query = "SELECT * FROM CARSINFO"
-db_df = pd.read_sql_query(query, engine)
+db_df = pd.read_sql(query, connection)
 
-# Close the SQLAlchemy Engine
-engine.dispose()
+# Close the database connection
+connection.close()
 
 # Define the layout of the app
 app.layout = dbc.Container(
@@ -327,9 +316,6 @@ def update_brand_logo(selected_brand):
     [Input('brand-dropdown', 'value')],
 )
 def update_plots(selected_brand):
-    DB_USERNAME = os.environ.get('DB_USERNAME')
-    DB_PASSWORD = os.environ.get('DB_PASSWORD')
-
     server = "carserver1.database.windows.net"
     database = "cardb"
     driver = "{ODBC Driver 18 for SQL Server}"
@@ -369,5 +355,6 @@ def update_plots(selected_brand):
     return scatter_fig, color_fig, model_pie_fig
 
 # Run the app
-if __name__ == '__main__': 
-    app.run_server(debug=True)
+if __name__ == '__main__':
+    server = app.server 
+    app.run_server(debug=False)
