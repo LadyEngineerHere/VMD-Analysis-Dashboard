@@ -10,9 +10,7 @@ import pyodbc
 import os
 
 # Initialize the Dash app with a Bootstrap theme
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], requests_pathname_prefix="/")
-app.requests_pathname_prefix = "/"  
-app.routes_pathname_prefix = app.url_base_pathname
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], requests_pathname_prefix="/your-prefix/")
 server = app.server
 
 
