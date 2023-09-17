@@ -10,9 +10,13 @@ import pandas as pd
 import pyodbc
 import os
 
+# Import url_base_pathname
+from dash import url_base_pathname
 
 # Initialize the Dash app with a Bootstrap theme
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], requests_pathname_prefix="/heads/")
+app.url_base_pathname = "/heads/"
+app.routes_pathname_prefix = app.url_base_pathname
 server = app.server
 
 # Retrieve database credentials from environment variables
