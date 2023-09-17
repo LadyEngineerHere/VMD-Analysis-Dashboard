@@ -1,8 +1,13 @@
 dash==2.12.1
-dash-bootstrap-components==1.5.0
-dash-table==5.3.3
+dash-bootstrap-components==0.7.2
+dash-core-components==1.6.0
+dash-html-components==1.0.2
+dash-renderer==1.2.2
+dash-table==4.5.1
 gunicorn
 plotly==5.17.0
 pandas==2.1.0
 pyodbc==4.0.39
+
+
 
