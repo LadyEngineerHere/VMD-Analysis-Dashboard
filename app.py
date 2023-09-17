@@ -1,20 +1,26 @@
 # Import necessary libraries
 import dash
-from dash import dash_table
-from dash import dcc, html
+from dash import dash_table, dcc, html  # Combine dcc and html imports into one line
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 import pyodbc
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
-from dash import dcc, html
 import os
 import sqlalchemy as sa
+import logging
 
 # Initialize the Dash app with a Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)  # Set the logging level to INFO
+logger = logging.getLogger(__name__)  # Create a logger object for your script
+
+# Log the type of the app object
+logger.info(f"Type of 'app': {type(app)}")
 
 # Define a function to get image paths for different car brands
 def get_image_path(brand):
