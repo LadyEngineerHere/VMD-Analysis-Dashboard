@@ -1,4 +1,3 @@
-# Import necessary libraries
 import dash
 from dash import url_base_pathname
 from dash import dash_table
@@ -10,9 +9,6 @@ import plotly.express as px
 import pandas as pd
 import pyodbc
 import os
-
-# Import url_base_pathname
-from dash import url_base_pathname
 
 # Initialize the Dash app with a Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], requests_pathname_prefix="/heads/")
