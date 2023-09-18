@@ -1,23 +1,24 @@
+# Import necessary libraries
 import dash
-from dash import dash_table
-from dash import dcc, html
+from dash import dcc, html, dash_table
 from dash.dependencies import Input, Output
-from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 import pyodbc
 import os
+from flask import Flask
+import warnings 
+
+# Use filterwarnings to suppress specific types of warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
 
 # Initialize the Dash app with a Bootstrap theme
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], requests_pathname_prefix="/dash/")
+flask_server = Flask(__name__)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
+
 server = app.server
-
-
-# Retrieve database credentials from environment variables
-DB_USERNAME = os.environ.get('DB_USERNAME')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-
 
 # Define a function to get image paths for different car brands
 def get_image_path(brand):
@@ -63,7 +64,12 @@ map_fig = px.scatter_geo(
     template='plotly_dark',
 )
 
+# Retrieve database credentials from environment variables
+DB_USERNAME = os.environ.get('DB_USERNAME')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+
 # Establish a connection to the database
+
 server = "carserver1.database.windows.net"
 database = "cardb"
 driver = "{ODBC Driver 18 for SQL Server}"
@@ -357,3 +363,4 @@ def update_plots(selected_brand):
 # Run the app
 if __name__ == '__main__':
     app.run_server(debug=True)
+
